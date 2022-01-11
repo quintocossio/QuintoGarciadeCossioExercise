@@ -28,6 +28,13 @@ class AlbumCell: UITableViewCell {
         isUserInteractionEnabled = true
     }
     
+    func set(album: Album){
+        self.album = album
+        
+        titleLbl.text = album.title
+        
+    }
+    
 
     @objc func cellPressed(){
         if let album = self.album{

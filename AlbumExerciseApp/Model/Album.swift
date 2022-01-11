@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Album: Identifiable, Decodable{
+struct Album: Decodable{
     
     var userId:Int
     var id:Int
@@ -15,6 +15,4 @@ struct Album: Identifiable, Decodable{
 
 }
 
-struct AlbumResponse: Decodable {
-    let request: [Album]
-}
+

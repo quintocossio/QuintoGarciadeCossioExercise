@@ -9,6 +9,7 @@ import UIKit
 
 class AlbumListVC: UIViewController {
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     
     var albums = [Album]()
@@ -34,26 +35,37 @@ class AlbumListVC: UIViewController {
     
     
     func loadAlbums(){
-        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         NetworkManager.sharedManager.fetchAlbums { result in
             switch result{
             case .success(let albums):
                 self.albums = albums
                 DispatchQueue.main.async {
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     self.tableView.reloadData()
                 }
             case .failure(let error):
                 switch error {
                 case .invalidData:
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     print("The data received from the server was invalid")
                     
                 case .invalidURL:
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     print("There is an error trying to reach the server")
                     
                 case .invalidResponse:
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     print("Invalid response from the server. Try again later")
                     
                 case .unableToComplete:
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
                     print("Unable to complete your request at this time. Try again later.")
                 }
                 }
@@ -123,9 +135,8 @@ extension AlbumListVC: UITableViewDelegate, UITableViewDataSource{
             album = albums[indexPath.row]
         }
         
-        cell.album = album
+        cell.set(album: album)
         cell.delegate = self
-        cell.titleLbl.text = album.title
         
         return cell
     }
