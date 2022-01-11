@@ -145,7 +145,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="LrS-7F-OIZ" id="6eZ-zk-QlB"/>
                         <outlet property="collectionView" destination="vea-Bh-NqO" id="tSM-VJ-HsJ"/>
-                        <segue destination="JrB-Tb-EjS" kind="show" id="yWJ-yC-72b"/>
+                        <segue destination="JrB-Tb-EjS" kind="show" identifier="photoAlbumVC_PhotoDetailVCSegue" id="yWJ-yC-72b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q4U-mV-xDq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -161,32 +161,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Od-OK-AgN">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="wHE-RB-UvP">
-                                <rect key="frame" x="197" y="438" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="htv-5L-x73"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="7Od-OK-AgN" secondAttribute="bottom" id="1MK-Xp-FYT"/>
-                            <constraint firstItem="wHE-RB-UvP" firstAttribute="centerX" secondItem="Ltk-Vk-E7s" secondAttribute="centerX" id="KeX-mG-RCr"/>
-                            <constraint firstItem="wHE-RB-UvP" firstAttribute="centerY" secondItem="Ltk-Vk-E7s" secondAttribute="centerY" id="hhf-CX-sSi"/>
-                            <constraint firstItem="7Od-OK-AgN" firstAttribute="top" secondItem="Ltk-Vk-E7s" secondAttribute="top" id="nA6-Ni-1hl"/>
+                            <constraint firstItem="7Od-OK-AgN" firstAttribute="top" secondItem="htv-5L-x73" secondAttribute="top" id="ctg-tC-G8p"/>
                             <constraint firstItem="7Od-OK-AgN" firstAttribute="trailing" secondItem="htv-5L-x73" secondAttribute="trailing" id="pdU-ZW-ZfS"/>
                             <constraint firstItem="7Od-OK-AgN" firstAttribute="leading" secondItem="htv-5L-x73" secondAttribute="leading" id="rrz-gy-C6i"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="9jK-dc-6jV">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="4fz-sq-R2m">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="7pI-0x-zxd">
-                                <rect key="frame" x="347" y="7" width="47" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Details"/>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="9jK-dc-6jV"/>
+                    <connections>
+                        <outlet property="photoImgView" destination="7Od-OK-AgN" id="wtZ-7z-OqV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PSA-hY-Rnk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

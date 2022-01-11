@@ -22,7 +22,8 @@ class PhotoAlbumVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = album?.title
+        self.title = album?.title
+        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
         
         loadAlbumPhotos()
         
@@ -53,27 +54,43 @@ class PhotoAlbumVC: UIViewController {
                 print(photos)
                 
             case .failure(let error):
-                switch error {
-                case .invalidData:
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
-                    print("The data received from the server was invalid")
-                    
-                case .invalidURL:
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
-                    print("There is an error trying to reach the server")
-                    
-                case .invalidResponse:
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
-                    print("Invalid response from the server. Try again later")
-                    
-                case .unableToComplete:
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
-                    print("Unable to complete your request at this time. Try again later.")
+                
+                DispatchQueue.main.async {
+                    switch error {
+                    case .invalidData:
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        AlertManager.showAlert(title: "Error", message: "The data received from the server was invalid", vc: self) {
+                            
+                            self.loadAlbumPhotos()
+                        }
+                        
+                    case .invalidURL:
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        AlertManager.showAlert(title: "Error", message: "There is an error trying to reach the server", vc: self) {
+                            
+                            self.loadAlbumPhotos()
+                        }
+                        
+                    case .invalidResponse:
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        AlertManager.showAlert(title: "Error", message: "Invalid response from the server. Try again later", vc: self) {
+                            
+                            self.loadAlbumPhotos()
+                        }
+                        
+                    case .unableToComplete:
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        AlertManager.showAlert(title: "Ups!", message: "Unable to complete your request at this time. Check your internet connection", vc: self) {
+                            
+                            self.loadAlbumPhotos()
+                        }
+                    }
                 }
+                
 
             
             }
@@ -82,6 +99,20 @@ class PhotoAlbumVC: UIViewController {
         
         
     }
+    
+    //MARK: - SEGUE METHODS
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "photoAlbumVC_PhotoDetailVCSegue"{
+            let photoDetailVC = segue.destination as! PhotoDetailVC
+            
+            if let sender = sender as? Photo{
+                photoDetailVC.photo = sender
+            }
+            
+        }
+    }
+    
     
 
 }
@@ -129,9 +160,7 @@ extension PhotoAlbumVC: UICollectionViewDelegateFlowLayout{
 }
 
 extension PhotoAlbumVC: PhotoCollectionViewCellDelegate{
-    func goToPhotoDetail(withId: Int) {
-        self.performSegue(withIdentifier: "", sender: nil)
+    func goToPhotoDetail(photo: Photo) {
+        self.performSegue(withIdentifier: "photoAlbumVC_PhotoDetailVCSegue", sender: photo)
     }
-    
-    
 }

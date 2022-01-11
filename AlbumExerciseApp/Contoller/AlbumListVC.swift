@@ -47,30 +47,46 @@ class AlbumListVC: UIViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                switch error {
-                case .invalidData:
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
-                    print("The data received from the server was invalid")
-                    
-                case .invalidURL:
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
-                    print("There is an error trying to reach the server")
-                    
-                case .invalidResponse:
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
-                    print("Invalid response from the server. Try again later")
-                    
-                case .unableToComplete:
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
-                    print("Unable to complete your request at this time. Try again later.")
+                
+                DispatchQueue.main.async {
+                    switch error {
+                    case .invalidData:
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        AlertManager.showAlert(title: "Error", message: "The data received from the server was invalid", vc: self) {
+                            
+                            self.loadAlbums()
+                        }
+                        
+                    case .invalidURL:
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        AlertManager.showAlert(title: "Error", message: "There is an error trying to reach the server", vc: self) {
+                            
+                            self.loadAlbums()
+                        }
+                        
+                    case .invalidResponse:
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        AlertManager.showAlert(title: "Error", message: "Invalid response from the server. Try again later", vc: self) {
+                            
+                            self.loadAlbums()
+                        }
+                        
+                    case .unableToComplete:
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        AlertManager.showAlert(title: "Ups!", message: "Unable to complete your request at this time. Check your internet connection", vc: self) {
+                            
+                            self.loadAlbums()
+                        }
+                    }
                 }
-                }
+                
             }
         }
+    }
     
     //MARK: - SEARCH METHODS
     

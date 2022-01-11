@@ -8,7 +8,7 @@
 import UIKit
 
 protocol PhotoCollectionViewCellDelegate{
-    func goToPhotoDetail(withId: Int)
+    func goToPhotoDetail(photo: Photo)
 }
 
 class PhotoCollectionViewCell: UICollectionViewCell {
@@ -43,7 +43,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     @objc func cellPressed(){
         if let photo = self.photo{
-            delegate?.goToPhotoDetail(withId: photo.id)
+            delegate?.goToPhotoDetail(photo: photo)
         }
     }
 }
