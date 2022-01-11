@@ -15,6 +15,7 @@ class AlbumListVC: UIViewController {
     var albums = [Album]()
     var filteredAlbums = [Album]()
     let searchController = UISearchController(searchResultsController: nil)
+    var refreshControl:UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +31,20 @@ class AlbumListVC: UIViewController {
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
         
+        refreshControl = UIRefreshControl()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        
         loadAlbums()
         
-        
 
+    }
+    
+    @objc func handleRefresh(){
+        
+        loadAlbums()
+        self.refreshControl.endRefreshing()
+        
     }
     
     
