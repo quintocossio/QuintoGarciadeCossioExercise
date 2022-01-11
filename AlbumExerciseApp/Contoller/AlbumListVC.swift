@@ -82,6 +82,18 @@ class AlbumListVC: UIViewController {
         return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
     }
     
+    //MARK: - SEGUE METHODS
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AlbumListVC_PhotoAlbumVCSegue"{
+            let photoAlbumVC = segue.destination as! PhotoAlbumVC
+            
+            if let sender = sender as? Album{
+                photoAlbumVC.album = sender
+            }
+            
+        }
+    }
         
 }
     
@@ -111,6 +123,8 @@ extension AlbumListVC: UITableViewDelegate, UITableViewDataSource{
             album = albums[indexPath.row]
         }
         
+        cell.album = album
+        cell.delegate = self
         cell.titleLbl.text = album.title
         
         return cell
@@ -127,4 +141,12 @@ extension AlbumListVC: UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
+}
+
+extension AlbumListVC: AlbumCellDelegate {
+    func goToPhotos(forAlbum: Album) {
+        self.performSegue(withIdentifier: "AlbumListVC_PhotoAlbumVCSegue", sender: forAlbum)
+    }
+    
+    
 }
