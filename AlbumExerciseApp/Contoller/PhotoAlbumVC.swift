@@ -31,10 +31,16 @@ class PhotoAlbumVC: UIViewController {
     }
     
     func loadAlbumPhotos(){
+        photos.removeAll()
+        
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         guard let albumId = album?.id else {
-            //TODO SHOW ERROR
+            
+            AlertManager.showAlert(title: "Ups!", message: "Album doesn't exist", vc: self) {
+                
+                self.loadAlbumPhotos()
+            }
             activityIndicator.isHidden = true
             activityIndicator.stopAnimating()
             return
@@ -51,7 +57,6 @@ class PhotoAlbumVC: UIViewController {
                     self.collectionView.reloadData()
                 }
                 
-                print(photos)
                 
             case .failure(let error):
                 

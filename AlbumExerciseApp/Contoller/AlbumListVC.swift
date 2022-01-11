@@ -28,13 +28,17 @@ class AlbumListVC: UIViewController {
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
+        tableView.tableFooterView = UIView()
         
         loadAlbums()
+        
+        
 
     }
     
     
     func loadAlbums(){
+        albums.removeAll()
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         NetworkManager.sharedManager.fetchAlbums { result in
